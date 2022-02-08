@@ -24,10 +24,11 @@ export default class TableHeader extends Component {
   };
 
   render() {
+    const { columns } = this.props;
     return (
       <thead>
         <tr>
-          {this.props.columns.map((column, index) => (
+          {columns.map((column, index) => (
             <th
               style={{ cursor: "pointer" }}
               onClick={() => this.raiseSort(column.path)}

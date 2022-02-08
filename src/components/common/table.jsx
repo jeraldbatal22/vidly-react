@@ -2,20 +2,15 @@ import React from "react";
 import TableBody from "./tableBody";
 import TableHeader from "./tableHeader";
 
-const Table = (props) => {
+const Table = ({ columns, sortColumn, onHandleSort, currentPosts }) => {
   return (
     <table className='table'>
       <TableHeader
-        columns={props.columns}
-        sortColumn={props.sortColumn}
-        onHandleSort={props.onHandleSort}
+        columns={columns}
+        sortColumn={sortColumn}
+        onHandleSort={onHandleSort}
       />
-      <TableBody
-        columns={props.columns}
-        data={props.currentPosts}
-        onHandleDelete={props.onHandleDelete}
-        onHandleLike={props.onHandleLike}
-      />
+      <TableBody columns={columns} data={currentPosts} />
     </table>
   );
 };

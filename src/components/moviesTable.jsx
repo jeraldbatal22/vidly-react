@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Like from "./common/like";
 import Table from "./common/table";
+import { deleteMovie, likedMovie } from "../redux/actions/movieAction";
 
-export default class MoviesTable extends Component {
+class MoviesTable extends Component {
   state = {
     columns: [
       {
@@ -27,16 +29,13 @@ export default class MoviesTable extends Component {
       },
       {
         content: (movie) => (
-          <Like
-            liked={movie.liked}
-            onClick={() => this.props.onHandleLike(movie)}
-          />
+          <Like liked={movie.liked} onClick={() => this.handleLike(movie)} />
         ),
       },
       {
         content: (movie) => (
           <button
-            onClick={() => this.props.onHandleDelete(movie)}
+            onClick={() => this.handleDelete(movie)}
             className='btn btn-danger btn-sm'>
             Delete
           </button>
@@ -45,14 +44,17 @@ export default class MoviesTable extends Component {
     ],
   };
 
+  handleDelete = (movie) => {
+    const movies = this.props.movies.filter((m) => m._id !== movie._id);
+    this.props.deleteMovie(movies);
+  };
+
+  handleLike = (movie) => {
+    this.props.likedMovie(movie);
+  };
+
   render() {
-    const {
-      onHandleLike,
-      onHandleDelete,
-      currentPosts,
-      sortColumn,
-      onHandleSort,
-    } = this.props;
+    const { onHandleLike, currentPosts, sortColumn, onHandleSort } = this.props;
     return (
       <Table
         columns={this.state.columns}
@@ -60,8 +62,16 @@ export default class MoviesTable extends Component {
         sortColumn={sortColumn}
         onHandleSort={onHandleSort}
         onHandleLike={onHandleLike}
-        onHandleDelete={onHandleDelete}
       />
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  movies: state.movies.movies,
+  genres: state.movies.genres,
+});
+
+export default connect(mapStateToProps, { deleteMovie, likedMovie })(
+  MoviesTable
+);

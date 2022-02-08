@@ -11,13 +11,13 @@ export default class TableBody extends Component {
   };
 
   render() {
+    const { data, columns } = this.props;
     return (
       <tbody>
-        {this.props.data.map((item, index) => (
+        {data.map((item, index) => (
           <tr key={index}>
-            {this.props.columns.map((column, index) => (
+            {columns.map((column, index) => (
               // <td key={index}>{item[column.path]}</td>
-              // Link to="movies/:id"
               <td key={index}>{this.renderCell(item, column)}</td>
             ))}
           </tr>

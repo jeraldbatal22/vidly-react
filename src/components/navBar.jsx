@@ -3,7 +3,9 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+    <nav
+      className='navbar navbar-expand-lg navbar-light bg-light '
+      style={{ marginBottom: "50px" }}>
       <a className='navbar-brand'>Vidly</a>
       <button
         className='navbar-toggler'
